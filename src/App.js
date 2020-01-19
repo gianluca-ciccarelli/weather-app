@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import Paper from "@material-ui/core/Paper";
 import AppBar from "@material-ui/core/AppBar";
@@ -39,30 +40,34 @@ class App extends React.Component {
   render() {
     const { city } = this.state;
     return (
-      <Grid>
-        <Row>
-          <AppBar position="sticky">
-            <Toolbar>
-              <Typography color="inherit">Weather-App</Typography>
-            </Toolbar>
-          </AppBar>
-        </Row>
-        <Row>
-          <Col xs={12} md={6}>
-            <LocationList
-              cities={cities}
-              onSelectedLocation={this.handleSelectedLocation}
-            />
-          </Col>
-          <Col xs={12} md={6}>
-            <Paper zdepth={4}>
-              <div className="details">
-                {city === null ? null : <ForecastExtended city={city} />}
-              </div>
-            </Paper>
-          </Col>
-        </Row>
-      </Grid>
+      <Router basename={window.location.pathname || ""}>
+        <Route exact path="/">
+          <Grid>
+            <Row>
+              <AppBar position="sticky">
+                <Toolbar>
+                  <Typography color="inherit">Weather-App</Typography>
+                </Toolbar>
+              </AppBar>
+            </Row>
+            <Row>
+              <Col xs={12} md={6}>
+                <LocationList
+                  cities={cities}
+                  onSelectedLocation={this.handleSelectedLocation}
+                />
+              </Col>
+              <Col xs={12} md={6}>
+                <Paper zdepth={4}>
+                  <div className="details">
+                    {city === null ? null : <ForecastExtended city={city} />}
+                  </div>
+                </Paper>
+              </Col>
+            </Row>
+          </Grid>
+        </Route>
+      </Router>
     );
   }
 }
